@@ -4,6 +4,7 @@ import Philosophy from "./components/Philosophy";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 
+
 export default function App() {
   return (
     <>
