@@ -3,6 +3,8 @@ import Hero from "./components/Hero";
 import Philosophy from "./components/Philosophy";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
+import ProductSection from "./components/ProductSection";
+
 
 
 export default function App() {
@@ -17,6 +19,7 @@ export default function App() {
             <>
               <Hero />
               <Philosophy />
+              <ProductSection />
             </>
           }
         />
