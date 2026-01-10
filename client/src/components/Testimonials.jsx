@@ -1,6 +1,6 @@
 export default function Testimonials() {
   return (
-    <section className="bg-black text-white">
+    <section id="testimonials" className="bg-black text-white">
       {/* Divider */}
       <div className="border-t border-white/20" />
 

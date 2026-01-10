@@ -2,22 +2,30 @@ import NavBar from "./components/NavBar";
 import Hero from "./components/Hero";
 import Philosophy from "./components/Philosophy";
 import ProductSection from "./components/ProductSection";
-import AuthDrawer from "./components/AuthDrawer";
 import Testimonials from "./components/Testimonials";
+import MyAccount from "./components/MyAccount";
 import Footer from "./components/Footer";
 
-import { Routes, Route } from "react-router-dom";
+import AuthDrawer from "./components/AuthDrawer";
+import CartDrawer from "./components/CartDrawer";
+
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
 
 export default function App() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      {/* Global UI */}
+      {/* GLOBAL UI (always mounted) */}
       <NavBar />
       <AuthDrawer />
+      <CartDrawer />
 
-      {/* Page Content */}
+      {/* PAGE CONTENT */}
       <main className="flex-1">
         <Routes>
+          {/* HOME */}
           <Route
             path="/"
             element={
@@ -29,10 +37,18 @@ export default function App() {
               </>
             }
           />
+
+          {/* MY ACCOUNT (PROTECTED) */}
+          <Route
+            path="/account"
+            element={
+              isAuthenticated ? <MyAccount /> : <Navigate to="/" />
+            }
+          />
         </Routes>
       </main>
 
-      {/* Footer */}
+      {/* FOOTER */}
       <Footer />
     </div>
   );
