@@ -9,6 +9,8 @@ import Footer from "./components/Footer";
 import AuthDrawer from "./components/AuthDrawer";
 import CartDrawer from "./components/CartDrawer";
 
+import Collection from "./pages/Collection"; // ✅ ADD THIS
+
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 
@@ -17,7 +19,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      {/* GLOBAL UI (always mounted) */}
+      {/* GLOBAL UI */}
       <NavBar />
       <AuthDrawer />
       <CartDrawer />
@@ -37,6 +39,9 @@ export default function App() {
               </>
             }
           />
+
+          {/* COLLECTION */}
+          <Route path="/collection" element={<Collection />} />
 
           {/* MY ACCOUNT (PROTECTED) */}
           <Route

@@ -72,11 +72,13 @@ export default function NavBar() {
 
         {/* RIGHT */}
         <ul className="flex gap-6 text-xs tracking-widest uppercase text-black items-center">
+          
+          {/* ✅ FIXED: route changed from /research → /collection */}
           <li
-            onClick={() => navigate("/research")}
+            onClick={() => navigate("/collection")}
             className="cursor-pointer hover:opacity-70 transition"
           >
-            Research
+            COLLECTION
           </li>
 
           {/* CART */}
