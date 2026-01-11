@@ -1,113 +1,68 @@
-ITRAANA ✨
-
+# ITRAANA ✨  
 Timeless Attars · Pure Essence · Quiet Luxury
 
-ITRAANA is a full-stack luxury attar e-commerce platform inspired by Indian perfumery heritage and modern minimal design.
-The project blends storytelling, craftsmanship, and technology to deliver a refined digital commerce experience.
+ITRAANA is a full-stack luxury attar (perfume oil) e-commerce platform inspired by India’s rich perfumery heritage and expressed through modern, minimal design. The project focuses on storytelling, craftsmanship, and a refined digital commerce experience.
 
-🌿 Brand Philosophy
+---
+
+## 🌿 Brand Philosophy
 
 “Attars are not fragrances. They are memories distilled.”
 
-At ITRAANA, luxury is intentional and restrained.
-Every attar is crafted with patience, tradition, and precision — and the digital experience reflects the same values.
+At ITRAANA, every creation is crafted with patience, restraint, and respect for tradition. The digital experience mirrors this philosophy — intentional, calm, and quietly luxurious.
 
-🧩 Project Overview
+---
 
-This repository contains:
+## 🧩 Project Overview
 
-🎨 Frontend – Premium UI/UX, product discovery, cart & account experience
+This repository contains both:
 
-⚙️ Backend – Secure APIs for authentication, users, orders, wishlist & products
+• **Frontend** – A premium UI for product discovery, cart, wishlist, authentication, and user account  
+• **Backend** – Secure REST APIs handling authentication, users, products, orders, and wishlists  
 
-✨ Key Features
-🖥️ Frontend
+---
 
-Luxury-inspired minimal UI
+## ✨ Features
 
-Immersive hero & storytelling sections
+### 🎨 Frontend
+- Luxury-inspired minimal UI
+- Immersive hero and storytelling sections
+- Product collection with wishlist & cart
+- Add-to-cart functionality
+- Slide-in login & create account drawer
+- User account dashboard
+- Recent orders & wishlist management
+- Testimonials section
+- Fully responsive layout
 
-Product collection grid
+### ⚙️ Backend
+- Secure user authentication (JWT)
+- Password hashing using bcrypt
+- User profile management
+- Wishlist & cart persistence
+- Order creation & history
+- RESTful API architecture
+- Scalable MongoDB models
 
-Wishlist (♡) support
+---
 
-Add-to-cart functionality
+## 🧱 Tech Stack
 
-Slide-in Login / Create Account drawer
+### Frontend
+- React + Vite
+- Tailwind CSS
+- Context API (Auth & Cart)
+- Lucide Icons
 
-User account dashboard
+### Backend
+- Node.js
+- Express.js
+- MongoDB + Mongoose
+- JWT Authentication
+- bcrypt
+- dotenv, cors
 
-Testimonials & brand narrative
+---
 
-Fully responsive design
+## 📂 Repository Structure
 
-⚙️ Backend
-
-Secure user authentication (JWT)
-
-Password hashing with bcrypt
-
-User profile management
-
-Wishlist persistence
-
-Cart & order handling
-
-RESTful API architecture
-
-Scalable MongoDB data models
-
-🧱 Tech Stack
-Frontend
-
-React + Vite
-
-Tailwind CSS
-
-Context API (Auth & Cart)
-
-Lucide Icons
-
-Backend
-
-Node.js
-
-Express.js
-
-MongoDB + Mongoose
-
-JWT Authentication
-
-📂 Repository Structure
-itraana/
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── context/
-│   │   ├── data/
-│   │   ├── pages/
-│   │   └── main.tsx
-│   └── package.json
-│
-├── backend/
-│   ├── src/
-│   │   ├── config/
-│   │   │   └── db.js
-│   │   ├── models/
-│   │   │   ├── User.js
-│   │   │   ├── Product.js
-│   │   │   └── Order.js
-│   │   ├── routes/
-│   │   │   ├── auth.routes.js
-│   │   │   ├── user.routes.js
-│   │   │   ├── product.routes.js
-│   │   │   └── order.routes.js
-│   │   ├── controllers/
-│   │   └── server.js
-│   └── package.json
-│
-└── README.md
-
-bcrypt
-
-dotenv, cors
