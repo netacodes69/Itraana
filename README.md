@@ -65,4 +65,85 @@ This repository contains both:
 ---
 
 ## 📂 Repository Structure
+itraana/
+├── frontend/
+│ ├── src/
+│ │ ├── components/
+│ │ ├── context/
+│ │ ├── data/
+│ │ ├── pages/
+│ │ └── main.tsx
+│ └── package.json
+│
+├── backend/
+│ ├── src/
+│ │ ├── config/
+│ │ │ └── db.js
+│ │ ├── models/
+│ │ │ ├── User.js
+│ │ │ ├── Product.js
+│ │ │ └── Order.js
+│ │ ├── routes/
+│ │ │ ├── auth.routes.js
+│ │ │ ├── user.routes.js
+│ │ │ ├── product.routes.js
+│ │ │ └── order.routes.js
+│ │ ├── controllers/
+│ │ └── server.js
+│ └── package.json
+│
+└── README.md
+
+
+---
+
+🔐 Authentication Flow
+
+User opens auth drawer via profile icon
+
+Login or Create Account
+
+JWT issued on successful authentication
+
+Auth state managed on frontend via Context API
+
+Protected routes for account, wishlist, and orders
+
+🛒 Order & Wishlist Flow
+
+User adds products to wishlist or cart
+
+Data is stored and synced with backend
+
+Orders appear in “My Account → Recent Orders”
+
+Wishlist items can be moved to cart
+
+🧠 Design Principles
+
+Quiet luxury over loud UI
+
+Content-first storytelling
+
+Minimal interactions, maximum clarity
+
+Inspired by luxury fashion and fragrance brands
+
+🔮 Future Enhancements
+
+Payment gateway integration
+
+Admin dashboard
+
+Order tracking
+
+Email notifications
+
+Product reviews
+
+Inventory management
+
+
+
+Made with 🤍 by Utkarsh & Hardyansh
 
