@@ -1,48 +1,72 @@
 # ITRAANA ✨  
 Timeless Attars · Pure Essence · Quiet Luxury
 
-ITRAANA is a full-stack luxury attar (perfume oil) e-commerce platform inspired by India’s rich perfumery heritage and expressed through modern, minimal design. The project focuses on storytelling, craftsmanship, and a refined digital commerce experience.
+ITRAANA is a **full-stack luxury attar (perfume oil) e-commerce platform** inspired by India’s rich perfumery heritage and expressed through modern, minimal design.
+
+The project blends **storytelling, craftsmanship, and technology** to deliver a refined digital shopping experience.
+
+---
+
+## 📸 Screenshots
+
+> UI highlights from the ITRAANA platform
+
+<img width="1872" height="900" alt="Screenshot 2026-01-11 144846" src="https://github.com/user-attachments/assets/48620b69-5c86-473b-af7c-e2d9a94f9fad" />
+
+<img width="1885" height="896" alt="Screenshot 2026-01-11 144902" src="https://github.com/user-attachments/assets/a67a6148-8605-4512-8e71-14c6ffbf0278" />
+
+<img width="1879" height="904" alt="Screenshot 2026-01-11 144923" src="https://github.com/user-attachments/assets/804ad969-5e43-4d7d-80fb-9b05930e2e3a" />
+
+<img width="1876" height="898" alt="Screenshot 2026-01-11 145003" src="https://github.com/user-attachments/assets/78bf3c81-9683-4299-831a-3f6409d02a3a" />
+
+<img width="1893" height="849" alt="Screenshot 2026-01-11 145240" src="https://github.com/user-attachments/assets/38ddcf03-7003-4bad-9f7c-8ce694fa44f4" />
+
+<img width="1890" height="856" alt="Screenshot 2026-01-11 145252" src="https://github.com/user-attachments/assets/056e96f5-eabf-4140-a63c-eeb9644e52be" />
+
+<img width="1882" height="904" alt="Screenshot 2026-01-11 145046" src="https://github.com/user-attachments/assets/ae434e55-3f3e-4769-86da-d2e9afb3471a" />
+
 
 ---
 
 ## 🌿 Brand Philosophy
 
-“Attars are not fragrances. They are memories distilled.”
+> “Attars are not fragrances. They are memories distilled.”
 
-At ITRAANA, every creation is crafted with patience, restraint, and respect for tradition. The digital experience mirrors this philosophy — intentional, calm, and quietly luxurious.
+ITRAANA represents restraint, patience, and quiet confidence.  
+Every element — from product cards to typography — reflects **quiet luxury** rather than loud commerce.
 
 ---
 
 ## 🧩 Project Overview
 
-This repository contains both:
-
-• **Frontend** – A premium UI for product discovery, cart, wishlist, authentication, and user account  
-• **Backend** – Secure REST APIs handling authentication, users, products, orders, and wishlists  
-
----
-
-## ✨ Features
+This repository contains **both frontend and backend** in a single full-stack setup.
 
 ### 🎨 Frontend
 - Luxury-inspired minimal UI
-- Immersive hero and storytelling sections
+- Storytelling hero section
 - Product collection with wishlist & cart
-- Add-to-cart functionality
-- Slide-in login & create account drawer
+- Slide-in login / signup drawer
 - User account dashboard
-- Recent orders & wishlist management
-- Testimonials section
-- Fully responsive layout
+- Testimonials & brand narrative
+- Fully responsive design
 
 ### ⚙️ Backend
 - Secure user authentication (JWT)
-- Password hashing using bcrypt
+- Password hashing with bcrypt
 - User profile management
 - Wishlist & cart persistence
 - Order creation & history
 - RESTful API architecture
-- Scalable MongoDB models
+
+---
+
+## ✨ Key Features
+
+- Add to cart & wishlist
+- Persistent user sessions
+- Protected routes (Account, Orders, Wishlist)
+- Clean, scalable folder structure
+- Designed for future admin & payment integration
 
 ---
 
@@ -62,88 +86,4 @@ This repository contains both:
 - bcrypt
 - dotenv, cors
 
----
-
-## 📂 Repository Structure
-itraana/
-├── frontend/
-│ ├── src/
-│ │ ├── components/
-│ │ ├── context/
-│ │ ├── data/
-│ │ ├── pages/
-│ │ └── main.tsx
-│ └── package.json
-│
-├── backend/
-│ ├── src/
-│ │ ├── config/
-│ │ │ └── db.js
-│ │ ├── models/
-│ │ │ ├── User.js
-│ │ │ ├── Product.js
-│ │ │ └── Order.js
-│ │ ├── routes/
-│ │ │ ├── auth.routes.js
-│ │ │ ├── user.routes.js
-│ │ │ ├── product.routes.js
-│ │ │ └── order.routes.js
-│ │ ├── controllers/
-│ │ └── server.js
-│ └── package.json
-│
-└── README.md
-
-
----
-
-🔐 Authentication Flow
-
-User opens auth drawer via profile icon
-
-Login or Create Account
-
-JWT issued on successful authentication
-
-Auth state managed on frontend via Context API
-
-Protected routes for account, wishlist, and orders
-
-🛒 Order & Wishlist Flow
-
-User adds products to wishlist or cart
-
-Data is stored and synced with backend
-
-Orders appear in “My Account → Recent Orders”
-
-Wishlist items can be moved to cart
-
-🧠 Design Principles
-
-Quiet luxury over loud UI
-
-Content-first storytelling
-
-Minimal interactions, maximum clarity
-
-Inspired by luxury fashion and fragrance brands
-
-🔮 Future Enhancements
-
-Payment gateway integration
-
-Admin dashboard
-
-Order tracking
-
-Email notifications
-
-Product reviews
-
-Inventory management
-
-
-
-Made with 🤍 by Utkarsh & Hardyansh
 
