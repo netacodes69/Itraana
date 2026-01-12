@@ -1,12 +1,30 @@
 import { X } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { loginUser } from "../services/auth.service";
 
 export default function AuthDrawer() {
   const { isAuthOpen, setIsAuthOpen } = useAuth();
   const [mode, setMode] = useState("login"); // "login" | "signup"
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
   if (!isAuthOpen) return null;
+
+  const handleLogin = async () => {
+    try {
+      setLoading(true);
+      const res = await loginUser({ email, password });
+      localStorage.setItem("token", res.data.token);
+      setIsAuthOpen(false);
+    } catch (err) {
+      alert("Invalid email or password");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -18,7 +36,6 @@ export default function AuthDrawer() {
 
       {/* Drawer */}
       <div className="fixed top-0 right-0 h-screen w-full sm:w-[420px] bg-white z-50 flex flex-col">
-
         {/* Close */}
         <button
           onClick={() => setIsAuthOpen(false)}
@@ -29,7 +46,6 @@ export default function AuthDrawer() {
 
         {/* Content */}
         <div className="flex-1 flex flex-col justify-center px-10">
-
           {/* LOGIN */}
           {mode === "login" && (
             <>
@@ -44,6 +60,8 @@ export default function AuthDrawer() {
                   </label>
                   <input
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full border-b border-black focus:outline-none py-2"
                   />
                 </div>
@@ -54,12 +72,18 @@ export default function AuthDrawer() {
                   </label>
                   <input
                     type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="w-full border-b border-black focus:outline-none py-2"
                   />
                 </div>
 
-                <button className="w-full bg-black text-white py-4 text-xs uppercase tracking-widest">
-                  Login
+                <button
+                  onClick={handleLogin}
+                  disabled={loading}
+                  className="w-full bg-black text-white py-4 text-xs uppercase tracking-widest disabled:opacity-60"
+                >
+                  {loading ? "Logging in..." : "Login"}
                 </button>
               </div>
 
@@ -76,7 +100,7 @@ export default function AuthDrawer() {
             </>
           )}
 
-          {/* SIGNUP */}
+          {/* SIGNUP (UI ONLY FOR NOW) */}
           {mode === "signup" && (
             <>
               <h2 className="text-lg tracking-widest uppercase mb-6">
@@ -88,18 +112,14 @@ export default function AuthDrawer() {
                   <label className="text-xs uppercase tracking-widest">
                     First Name*
                   </label>
-                  <input
-                    className="w-full border-b border-black focus:outline-none py-2"
-                  />
+                  <input className="w-full border-b border-black focus:outline-none py-2" />
                 </div>
 
                 <div>
                   <label className="text-xs uppercase tracking-widest">
                     Last Name*
                   </label>
-                  <input
-                    className="w-full border-b border-black focus:outline-none py-2"
-                  />
+                  <input className="w-full border-b border-black focus:outline-none py-2" />
                 </div>
 
                 <div>
@@ -139,7 +159,6 @@ export default function AuthDrawer() {
               </p>
             </>
           )}
-
         </div>
       </div>
     </>

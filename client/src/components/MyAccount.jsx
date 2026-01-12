@@ -1,180 +1,204 @@
-import { useState } from 'react';
+import { useEffect, useState } from "react";
+import {
+  getUserProfile,
+  updateUserProfile,
+  getWishlist,
+  removeFromWishlist,
+} from "../services/user.service";
+import { logoutUser } from "../services/auth.service";
+import { useNavigate } from "react-router-dom";
 
 export default function MyAccount() {
+  const navigate = useNavigate();
+
   const [isEditing, setIsEditing] = useState(false);
+  const [profile, setProfile] = useState(null);
+  const [wishlist, setWishlist] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const orders = [
-    {
-      id: 'ORD-2024-001',
-      date: 'December 15, 2024',
-      status: 'Delivered',
-      total: 6498,
-      items: 2
+  const [editData, setEditData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+
+  /* =========================
+     FETCH PROFILE + WISHLIST
+  ========================= */
+  useEffect(() => {
+    Promise.all([getUserProfile(), getWishlist()])
+      .then(([profileRes, wishlistRes]) => {
+        setProfile(profileRes.data);
+        setEditData({
+          firstName: profileRes.data.firstName,
+          lastName: profileRes.data.lastName,
+          email: profileRes.data.email,
+        });
+        setWishlist(wishlistRes.data);
+      })
+      .catch((err) => {
+        console.error("Failed to load account data", err);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  /* =========================
+     UPDATE PROFILE
+  ========================= */
+  const handleUpdateProfile = async () => {
+    try {
+      const res = await updateUserProfile(editData);
+      setProfile(res.data);
+      setIsEditing(false);
+    } catch {
+      alert("Failed to update profile");
     }
-  ];
+  };
 
-  const wishlistItems = [
-    { id: 1, name: 'Amber', price: 2899, image: 'https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=300&q=80' },
-    { id: 2, name: 'Rose Attar', price: 3499, image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=300&q=80' }
-  ];
+  /* =========================
+     REMOVE WISHLIST ITEM
+  ========================= */
+  const handleRemoveWishlist = async (productId) => {
+    try {
+      await removeFromWishlist(productId);
+      setWishlist((prev) =>
+        prev.filter((item) => item.id !== productId)
+      );
+    } catch {
+      alert("Failed to remove item");
+    }
+  };
+
+  /* =========================
+     LOGOUT
+  ========================= */
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+    } catch {}
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
+  if (loading) {
+    return (
+      <section className="min-h-screen flex items-center justify-center">
+        <p className="text-xs uppercase tracking-widest text-neutral-500">
+          Loading account...
+        </p>
+      </section>
+    );
+  }
 
   return (
     <section className="min-h-screen bg-neutral-50">
-      {/* Hero Banner */}
-      <div className="bg-gradient-to-r from-neutral-900 to-neutral-800 text-white py-12">
+      {/* HERO */}
+      <div className="bg-neutral-900 text-white py-12">
         <div className="max-w-6xl mx-auto px-8">
-          <div className="flex items-center gap-6 mb-3">
-            <div className="h-px w-12 bg-gradient-to-r from-transparent to-amber-200/40"></div>
-            <p className="text-[10px] uppercase tracking-[0.5em] text-amber-100/60">
-              Your Account
-            </p>
-          </div>
-          <h1 className="text-3xl font-extralight tracking-tight">
-            Welcome, <span className="text-amber-100">User</span>
+          <h1 className="text-3xl font-light">
+            Welcome, {profile?.firstName}
           </h1>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-8 py-16">
-        
-        {/* Profile Section */}
+        {/* PROFILE */}
         <div className="bg-white p-8 mb-8">
-          <div className="flex items-start justify-between mb-6">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full flex items-center justify-center">
-                <span className="text-2xl font-light text-neutral-800">U</span>
-              </div>
-              <div>
-                <h2 className="text-xl font-light mb-1">Utkarsh Pratap</h2>
-                <p className="text-sm text-neutral-500">user@email.com</p>
-              </div>
+          <div className="flex justify-between mb-6">
+            <div>
+              <h2 className="text-xl">
+                {profile.firstName} {profile.lastName}
+              </h2>
+              <p className="text-sm text-neutral-500">
+                {profile.email}
+              </p>
             </div>
-            <button 
+            <button
               onClick={() => setIsEditing(!isEditing)}
-              className="px-6 py-2 border border-neutral-800 text-neutral-800 text-xs uppercase tracking-wider hover:bg-neutral-800 hover:text-white transition-all"
+              className="border px-6 py-2 text-xs uppercase"
             >
-              {isEditing ? 'Cancel' : 'Edit Profile'}
+              {isEditing ? "Cancel" : "Edit"}
             </button>
           </div>
 
           {isEditing && (
-            <div className="pt-6 border-t border-neutral-200 space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs uppercase tracking-wider text-neutral-500 mb-2">Name</label>
-                  <input 
-                    type="text" 
-                    defaultValue="Utkarsh Pratap"
-                    className="w-full px-4 py-2 border border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs uppercase tracking-wider text-neutral-500 mb-2">Email</label>
-                  <input 
-                    type="email" 
-                    defaultValue="user@email.com"
-                    className="w-full px-4 py-2 border border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors"
-                  />
-                </div>
-              </div>
-              <button className="px-8 py-2 bg-neutral-900 text-white text-xs uppercase tracking-wider hover:bg-neutral-800 transition-all">
+            <div className="space-y-4">
+              <input
+                value={editData.firstName}
+                onChange={(e) =>
+                  setEditData({ ...editData, firstName: e.target.value })
+                }
+                className="border p-2 w-full"
+                placeholder="First Name"
+              />
+              <input
+                value={editData.lastName}
+                onChange={(e) =>
+                  setEditData({ ...editData, lastName: e.target.value })
+                }
+                className="border p-2 w-full"
+                placeholder="Last Name"
+              />
+              <input
+                value={editData.email}
+                onChange={(e) =>
+                  setEditData({ ...editData, email: e.target.value })
+                }
+                className="border p-2 w-full"
+                placeholder="Email"
+              />
+              <button
+                onClick={handleUpdateProfile}
+                className="bg-black text-white px-6 py-2 text-xs uppercase"
+              >
                 Save Changes
               </button>
             </div>
           )}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
-          {/* Orders */}
-          <div className="bg-white p-8">
-            <h3 className="text-lg font-light tracking-wide mb-6 flex items-center justify-between">
-              <span>Recent Orders</span>
-              <span className="text-sm text-neutral-500">({orders.length})</span>
-            </h3>
+        {/* WISHLIST */}
+        <div className="bg-white p-8 mb-8">
+          <h3 className="mb-6 text-lg">Wishlist ({wishlist.length})</h3>
 
-            {orders.length > 0 ? (
-              <div className="space-y-4">
-                {orders.map((order) => (
-                  <div key={order.id} className="border border-neutral-200 p-4 space-y-3">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <p className="text-xs uppercase tracking-wider text-neutral-500">Order #{order.id}</p>
-                        <p className="text-sm text-neutral-600 mt-1">{order.date}</p>
-                      </div>
-                      <span className="px-3 py-1 bg-green-100 text-green-800 text-xs uppercase tracking-wider">
-                        {order.status}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center pt-3 border-t border-neutral-200">
-                      <p className="text-sm text-neutral-600">{order.items} items</p>
-                      <p className="font-light">₹{order.total.toLocaleString('en-IN')}</p>
-                    </div>
+          {wishlist.length === 0 ? (
+            <p className="text-neutral-500">Your wishlist is empty</p>
+          ) : (
+            <div className="space-y-4">
+              {wishlist.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex gap-4 border p-3"
+                >
+                  <img
+                    src={item.image}
+                    className="w-20 h-20 object-cover"
+                  />
+                  <div className="flex-1">
+                    <p>{item.name}</p>
+                    <p>₹{item.price}</p>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-neutral-500 mb-3">No orders yet</p>
-                <a href="/collections" className="text-sm uppercase tracking-wider text-neutral-800 underline underline-offset-4 hover:opacity-60 transition">
-                  Start Shopping
-                </a>
-              </div>
-            )}
-          </div>
-
-          {/* Wishlist */}
-          <div className="bg-white p-8">
-            <h3 className="text-lg font-light tracking-wide mb-6 flex items-center justify-between">
-              <span>Wishlist</span>
-              <span className="text-sm text-neutral-500">({wishlistItems.length})</span>
-            </h3>
-
-            {wishlistItems.length > 0 ? (
-              <div className="space-y-4">
-                {wishlistItems.map((item) => (
-                  <div key={item.id} className="flex gap-4 border border-neutral-200 p-3 group hover:border-neutral-400 transition-colors">
-                    <img 
-                      src={item.image} 
-                      alt={item.name}
-                      className="w-20 h-20 object-cover"
-                    />
-                    <div className="flex-1 flex flex-col justify-between">
-                      <div>
-                        <h4 className="text-sm uppercase tracking-wider mb-1">{item.name}</h4>
-                        <p className="text-sm font-light">₹{item.price.toLocaleString('en-IN')}</p>
-                      </div>
-                      <button className="text-xs uppercase tracking-wider text-neutral-700 hover:text-neutral-900 transition self-start">
-                        Add to Cart →
-                      </button>
-                    </div>
-                    <button className="self-start text-neutral-400 hover:text-red-500 transition">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-neutral-500 mb-3">Your wishlist is empty</p>
-                <a href="/collections" className="text-sm uppercase tracking-wider text-neutral-800 underline underline-offset-4 hover:opacity-60 transition">
-                  Explore Collection
-                </a>
-              </div>
-            )}
-          </div>
-
+                  <button
+                    onClick={() => handleRemoveWishlist(item.id)}
+                    className="text-red-500 text-sm"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* Sign Out */}
-        <div className="mt-8 text-center">
-          <button className="px-8 py-3 border border-neutral-300 text-neutral-700 text-xs uppercase tracking-wider hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-all">
+        {/* LOGOUT */}
+        <div className="text-center">
+          <button
+            onClick={handleLogout}
+            className="border px-8 py-3 text-xs uppercase hover:bg-black hover:text-white"
+          >
             Sign Out
           </button>
         </div>
-
       </div>
     </section>
   );
